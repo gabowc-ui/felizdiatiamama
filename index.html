@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mis Mamás❤️</title>
+    <style>
+        /* Configuración de la pantalla */
+        body { 
+            background-color: #fce4ec; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            perspective: 1000px; /* Necesario para el efecto 3D */
+        }
+
+        /* Contenedor de la tarjeta */
+        .card-container {
+            width: 300px;
+            height: 570px;
+            cursor: pointer;
+        }
+
+        /* La tarjeta que gira */
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        /* Clase que activa el giro */
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        /* Caras de la tarjeta */
+        .front, .back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Estilo del Frente */
+        .front img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* Estilo del Dorso (Mensaje) */
+        .back {
+            transform: rotateY(180deg);
+            text-align: center;
+        }
+
+        /* Textos y adornos */
+        h1 { color: #ad1457; font-size: 1.5rem; margin: 10px 0; }
+        p { color: #555; font-size: 1rem; line-height: 1.5; }
+        .heart { color: #e91e63; font-size: 2rem; animation: pulse 1.5s infinite; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="miMusica">
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="card-container">
+        <div class="card" id="tarjeta">
+            
+            <div class="front">
+                <img src="foto.jpg" alt="Nosotros">
+                <h1>¡Feliz Día, Mamá!</h1>
+                <p>Toca para ver tu sorpresa...</p>
+                <div class="heart">❤️</div>
+            </div>
+
+            <div class="back">
+                <h1>Para la mejor Mamá</h1>
+                <p>
+                    Mami en este día tan especial <br>
+                    queremos agradecerte por todo el esfuerzo y el cariño que nos brindas <br><br>
+                    Por cada momento que marcó nuestra vida para llegar a ser las personas que somos hoy<br>
+                    gracias a tus sacrificios hoy podemos seguir adelante; <br><br>
+                    estaremos agradecidos toda la vida y a pesar de no estar todos juntos <br>
+                    hoy vives en nosotros en cada <br>
+                    acción, decisión y en nuestros <br>
+                    corazones pásalo muy bonito <br><br>
+                    <strong>¡Te amamos muchísimo!</strong>
+                </p>
+                <div class="heart">❤️</div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        window.onload = () => {
+            const tarjeta = document.getElementById("tarjeta");
+            const musica = document.getElementById("miMusica");
+            let sorpresaActivada = false;
+
+            const activarSorpresa = () => {
+                // 1. Girar tarjeta
+                tarjeta.classList.toggle('flipped');
+
+                // 2. Activar música y confeti solo la primera vez
+                if (!sorpresaActivada) {
+                    musica.play().catch(e => console.log("Audio esperando clic"));
+                    
+                    confetti({
+                        particleCount: 150,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#ff69b4', '#ff1493', '#fce4ec']
+                    });
+                    
+                    sorpresaActivada = true;
+                }
+            };
+
+            // Escuchar el toque en PC o Celular
+            tarjeta.addEventListener('click', activarSorpresa);
+        };
+    </script>
+</body>
+</html>
